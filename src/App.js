@@ -13,7 +13,7 @@ function App() {
       .then(response => {
         const { encryptedData, key } = response.data;
         setOutput(encryptedData);
-        localStorage.setItem('encryptionKey', key); 
+        localStorage.setItem('symmetricKey', key);
       })
       .catch(error => {
         setOutput('Encryption failed');
@@ -21,7 +21,7 @@ function App() {
   };
 
   const handleDecrypt = () => {
-    const key = localStorage.getItem('encryptionKey'); 
+    const key = localStorage.getItem('symmetricKey');
     if (!key) {
       setOutput('Decryption key not found');
       return;
@@ -29,7 +29,7 @@ function App() {
 
     const requestData = {
       encryptedData: input,
-      encodedKey: key
+      symmetricKey: key
     };
 
     axios.post('http://localhost:8085/rest/honeywell/decrypt', requestData)
